@@ -16,10 +16,10 @@ import (
 	"github.com/MerinEREN/iiPackages/apis/accountSettings"
 	"github.com/MerinEREN/iiPackages/apis/demand"
 	"github.com/MerinEREN/iiPackages/apis/index"
-	"github.com/MerinEREN/iiPackages/apis/logout"
 	"github.com/MerinEREN/iiPackages/apis/offer"
 	"github.com/MerinEREN/iiPackages/apis/roles"
 	"github.com/MerinEREN/iiPackages/apis/servicePack"
+	"github.com/MerinEREN/iiPackages/apis/signout"
 	"github.com/MerinEREN/iiPackages/apis/timeline"
 	"github.com/MerinEREN/iiPackages/apis/userSettings"
 	// "github.com/MerinEREN/iiPackages/cookie"
@@ -67,7 +67,7 @@ func init() {
 	// http.HandleFunc("/logIn", makeHandlerFunc(logInHandler))
 	// http.HandleFunc("/accounts", makeHandlerFunc(accountsHandler))
 	http.HandleFunc("/accounts/", makeHandlerFunc(account.Handler))
-	http.HandleFunc("/logout/", makeHandlerFunc(logout.Handler))
+	http.HandleFunc("/signout/", makeHandlerFunc(signout.Handler))
 	/* if http.PostForm("/logIn", data); err != nil {
 		http.Err(w, "Internal server error while login",
 			http.StatusBadRequest)
