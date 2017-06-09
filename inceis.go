@@ -17,6 +17,7 @@ import (
 	"github.com/MerinEREN/iiPackages/apis/demand"
 	"github.com/MerinEREN/iiPackages/apis/index"
 	"github.com/MerinEREN/iiPackages/apis/offer"
+	"github.com/MerinEREN/iiPackages/apis/page"
 	"github.com/MerinEREN/iiPackages/apis/roles"
 	"github.com/MerinEREN/iiPackages/apis/servicePack"
 	"github.com/MerinEREN/iiPackages/apis/signout"
@@ -57,9 +58,10 @@ func init() {
 				"message bitch =)"))
 	// http.HandleFunc("/", makeHandlerFunc(index.Handler))
 	http.HandleFunc("/timeline", makeHandlerFunc(timeline.Handler))
-	http.HandleFunc("/demands", makeHandlerFunc(demand.Handler))
-	http.HandleFunc("/offers", makeHandlerFunc(offer.Handler))
-	http.HandleFunc("/servicePacks", makeHandlerFunc(servicePack.Handler))
+	http.HandleFunc("/pages/", makeHandlerFunc(page.Handler))
+	http.HandleFunc("/demands/", makeHandlerFunc(demand.Handler))
+	http.HandleFunc("/offers/", makeHandlerFunc(offer.Handler))
+	http.HandleFunc("/servicePacks/", makeHandlerFunc(servicePack.Handler))
 	http.HandleFunc("/roles/", makeHandlerFunc(roles.Handler))
 	http.HandleFunc("/userSettings/", makeHandlerFunc(userSettings.Handler))
 	http.HandleFunc("/accountSettings/", makeHandlerFunc(accountSettings.Handler))
