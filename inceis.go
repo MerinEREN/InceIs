@@ -8,10 +8,6 @@ up the detailed documentation that follows.
 package inceis
 
 import (
-	// "encoding/json"
-	// "fmt"
-	"strings"
-	// "github.com/MerinEREN/iiPackages/datastore/account"
 	"github.com/MerinEREN/iiPackages/apis/account"
 	"github.com/MerinEREN/iiPackages/apis/accountSettings"
 	"github.com/MerinEREN/iiPackages/apis/demand"
@@ -23,18 +19,14 @@ import (
 	"github.com/MerinEREN/iiPackages/apis/signout"
 	"github.com/MerinEREN/iiPackages/apis/timeline"
 	"github.com/MerinEREN/iiPackages/apis/userSettings"
+	"github.com/MerinEREN/iiPackages/session"
+	"strings"
 	// "github.com/MerinEREN/iiPackages/cookie"
 	"github.com/MerinEREN/iiPackages/page/template"
-	"golang.org/x/net/context"
-	// usr "github.com/MerinEREN/iiPackages/datastore/user"
 	"google.golang.org/appengine"
-	// "google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/memcache"
 	"google.golang.org/appengine/user"
-	// "io/ioutil"
-	// "html/template"
 	"log"
-	// "mime/multipart"
 	"net/http"
 	// "regexp"
 	"time"
@@ -46,8 +38,6 @@ var (
 // CHANGE THE REGEXP BELOW !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // validPath = regexp.MustCompile("^/|[/A-Za-z0-9]$")
 )
-
-// type LoginURLs map[string]string
 
 func init() {
 	// http.Handle("/favicon.ico", http.NotFoundHandler())
@@ -125,16 +115,18 @@ func init() {
 	template.RenderLogIn(w, p)
 } */
 
-type handlerFuncWithContextAndUser func(context.Context, http.ResponseWriter,
-	*http.Request, *user.User)
+type handlerFuncWithContextAndUser func(s *session.Session)
 
 func makeHandlerFunc(fn handlerFuncWithContextAndUser) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		ctx := appengine.NewContext(r)
+		s := new(session.Session)
+		s.Ctx = appengine.NewContext(r)
+		s.R = r
+		s.W = w
+		s.U = user.Current(s.Ctx)
+
 		// Authenticate the client
-		// ug is google user
-		ug := user.Current(ctx)
-		if ug == nil && r.URL.Path != "/" {
+		if s.U == nil && r.URL.Path != "/" {
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 		}
 		/* m := validPath.FindStringSubmatch(r.URL.Path)
@@ -152,7 +144,7 @@ func makeHandlerFunc(fn handlerFuncWithContextAndUser) http.HandlerFunc {
 			template.RenderIndex(w)
 		} else if strings.Contains(r.Header.Get("Accept"), "text/plain") {
 			log.Println("Getting data !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-			fn(ctx, w, r, ug)
+			fn(s)
 		}
 	}
 }
