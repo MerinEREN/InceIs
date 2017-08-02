@@ -10,6 +10,7 @@ package inceis
 import (
 	"github.com/MerinEREN/iiPackages/apis/account"
 	"github.com/MerinEREN/iiPackages/apis/accountSettings"
+	"github.com/MerinEREN/iiPackages/apis/content"
 	"github.com/MerinEREN/iiPackages/apis/demand"
 	"github.com/MerinEREN/iiPackages/apis/index"
 	"github.com/MerinEREN/iiPackages/apis/language"
@@ -49,7 +50,7 @@ func init() {
 	http.HandleFunc("/timeline", makeHandlerFunc(timeline.Handler))
 	http.HandleFunc("/languages/", makeHandlerFunc(language.Handler))
 	http.HandleFunc("/pages/", makeHandlerFunc(page.Handler))
-	// http.HandleFunc("/pages/regexp/contents/", makeHandlerFunc(content.Handler))
+	http.HandleFunc("/contents/", makeHandlerFunc(content.Handler))
 	http.HandleFunc("/demands/", makeHandlerFunc(demand.Handler))
 	http.HandleFunc("/offers/", makeHandlerFunc(offer.Handler))
 	http.HandleFunc("/servicePacks/", makeHandlerFunc(servicePack.Handler))
