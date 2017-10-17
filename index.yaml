@@ -10,12 +10,14 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: Page
+  properties:
+  - name: Created
+    direction: desc
+  - name: Link
+  - name: Title
+
 - kind: User
   properties:
   - name: Email
   - name: TagIDs
-
-- kind: Users
-  properties:
-  - name: Email
-  - name: UUID

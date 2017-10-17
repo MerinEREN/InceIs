@@ -15,8 +15,10 @@ import (
 	"github.com/MerinEREN/iiPackages/apis/demand"
 	"github.com/MerinEREN/iiPackages/apis/index"
 	"github.com/MerinEREN/iiPackages/apis/language"
+	"github.com/MerinEREN/iiPackages/apis/languages"
 	"github.com/MerinEREN/iiPackages/apis/offer"
 	"github.com/MerinEREN/iiPackages/apis/page"
+	"github.com/MerinEREN/iiPackages/apis/pages"
 	"github.com/MerinEREN/iiPackages/apis/roles"
 	"github.com/MerinEREN/iiPackages/apis/servicePack"
 	"github.com/MerinEREN/iiPackages/apis/signout"
@@ -49,7 +51,9 @@ func init() {
 				"message bitch =)"))
 	// http.HandleFunc("/", makeHandlerFunc(index.Handler))
 	http.HandleFunc("/timeline", makeHandlerFunc(timeline.Handler))
+	http.HandleFunc("/languages", makeHandlerFunc(languages.Handler))
 	http.HandleFunc("/languages/", makeHandlerFunc(language.Handler))
+	http.HandleFunc("/pages", makeHandlerFunc(pages.Handler))
 	http.HandleFunc("/pages/", makeHandlerFunc(page.Handler))
 	http.HandleFunc("/contents/", makeHandlerFunc(content.Handler))
 	http.HandleFunc("/demands/", makeHandlerFunc(demand.Handler))
