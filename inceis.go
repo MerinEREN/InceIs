@@ -9,21 +9,22 @@ up the detailed documentation that follows."
 package inceis
 
 import (
-	"github.com/MerinEREN/iiPackages/apis/account"
-	"github.com/MerinEREN/iiPackages/apis/accountSettings"
-	"github.com/MerinEREN/iiPackages/apis/content"
-	"github.com/MerinEREN/iiPackages/apis/demand"
-	"github.com/MerinEREN/iiPackages/apis/index"
-	"github.com/MerinEREN/iiPackages/apis/language"
-	"github.com/MerinEREN/iiPackages/apis/languages"
-	"github.com/MerinEREN/iiPackages/apis/offer"
-	"github.com/MerinEREN/iiPackages/apis/page"
-	"github.com/MerinEREN/iiPackages/apis/pages"
-	"github.com/MerinEREN/iiPackages/apis/roles"
-	"github.com/MerinEREN/iiPackages/apis/servicePack"
-	"github.com/MerinEREN/iiPackages/apis/signout"
-	"github.com/MerinEREN/iiPackages/apis/timeline"
-	"github.com/MerinEREN/iiPackages/apis/userSettings"
+	"github.com/MerinEREN/iiPackages/api/account"
+	"github.com/MerinEREN/iiPackages/api/accountSettings"
+	"github.com/MerinEREN/iiPackages/api/content"
+	"github.com/MerinEREN/iiPackages/api/contents"
+	"github.com/MerinEREN/iiPackages/api/demand"
+	"github.com/MerinEREN/iiPackages/api/index"
+	"github.com/MerinEREN/iiPackages/api/language"
+	"github.com/MerinEREN/iiPackages/api/languages"
+	"github.com/MerinEREN/iiPackages/api/offer"
+	"github.com/MerinEREN/iiPackages/api/page"
+	"github.com/MerinEREN/iiPackages/api/pages"
+	"github.com/MerinEREN/iiPackages/api/roles"
+	"github.com/MerinEREN/iiPackages/api/servicePack"
+	"github.com/MerinEREN/iiPackages/api/signout"
+	"github.com/MerinEREN/iiPackages/api/timeline"
+	"github.com/MerinEREN/iiPackages/api/userSettings"
 	"github.com/MerinEREN/iiPackages/session"
 	"strings"
 	// "github.com/MerinEREN/iiPackages/cookie"
@@ -55,10 +56,11 @@ func init() {
 	http.HandleFunc("/languages/", makeHandlerFunc(language.Handler))
 	http.HandleFunc("/pages", makeHandlerFunc(pages.Handler))
 	http.HandleFunc("/pages/", makeHandlerFunc(page.Handler))
+	http.HandleFunc("/contents", makeHandlerFunc(contents.Handler))
 	http.HandleFunc("/contents/", makeHandlerFunc(content.Handler))
-	http.HandleFunc("/demands/", makeHandlerFunc(demand.Handler))
-	http.HandleFunc("/offers/", makeHandlerFunc(offer.Handler))
-	http.HandleFunc("/servicePacks/", makeHandlerFunc(servicePack.Handler))
+	http.HandleFunc("/demands", makeHandlerFunc(demand.Handler))
+	http.HandleFunc("/offers", makeHandlerFunc(offer.Handler))
+	http.HandleFunc("/servicePacks", makeHandlerFunc(servicePack.Handler))
 	http.HandleFunc("/roles/", makeHandlerFunc(roles.Handler))
 	http.HandleFunc("/userSettings/", makeHandlerFunc(userSettings.Handler))
 	http.HandleFunc("/accountSettings/", makeHandlerFunc(accountSettings.Handler))
