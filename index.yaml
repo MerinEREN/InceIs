@@ -28,6 +28,11 @@ indexes:
   - name: ContentID
   - name: PageID
 
+- kind: PageContent
+  properties:
+  - name: ContentKey
+  - name: PageKey
+
 - kind: User
   properties:
   - name: Email

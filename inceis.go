@@ -11,11 +11,9 @@ package inceis
 import (
 	"github.com/MerinEREN/iiPackages/api/account"
 	"github.com/MerinEREN/iiPackages/api/accountSettings"
-	"github.com/MerinEREN/iiPackages/api/content"
 	"github.com/MerinEREN/iiPackages/api/contents"
 	"github.com/MerinEREN/iiPackages/api/demand"
 	"github.com/MerinEREN/iiPackages/api/index"
-	"github.com/MerinEREN/iiPackages/api/language"
 	"github.com/MerinEREN/iiPackages/api/languages"
 	"github.com/MerinEREN/iiPackages/api/offer"
 	"github.com/MerinEREN/iiPackages/api/page"
@@ -53,11 +51,9 @@ func init() {
 	// http.HandleFunc("/", makeHandlerFunc(index.Handler))
 	http.HandleFunc("/timeline", makeHandlerFunc(timeline.Handler))
 	http.HandleFunc("/languages", makeHandlerFunc(languages.Handler))
-	http.HandleFunc("/languages/", makeHandlerFunc(language.Handler))
 	http.HandleFunc("/pages", makeHandlerFunc(pages.Handler))
 	http.HandleFunc("/pages/", makeHandlerFunc(page.Handler))
 	http.HandleFunc("/contents", makeHandlerFunc(contents.Handler))
-	http.HandleFunc("/contents/", makeHandlerFunc(content.Handler))
 	http.HandleFunc("/demands", makeHandlerFunc(demand.Handler))
 	http.HandleFunc("/offers", makeHandlerFunc(offer.Handler))
 	http.HandleFunc("/servicePacks", makeHandlerFunc(servicePack.Handler))
@@ -68,7 +64,7 @@ func init() {
 	// http.HandleFunc("/logIn", makeHandlerFunc(logInHandler))
 	// http.HandleFunc("/accounts", makeHandlerFunc(accountsHandler))
 	http.HandleFunc("/accounts/", makeHandlerFunc(account.Handler))
-	http.HandleFunc("/signout/", makeHandlerFunc(signout.Handler))
+	http.HandleFunc("/signout", makeHandlerFunc(signout.Handler))
 	/* if http.PostForm("/logIn", data); err != nil {
 		http.Err(w, "Internal server error while login",
 			http.StatusBadRequest)
