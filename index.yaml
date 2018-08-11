@@ -16,6 +16,13 @@ indexes:
     direction: desc
   - name: Link
 
+- kind: Language
+  properties:
+  - name: Created
+    direction: desc
+  - name: Link
+  - name: Name
+
 - kind: Page
   properties:
   - name: Created
@@ -33,7 +40,23 @@ indexes:
   - name: ContentKey
   - name: PageKey
 
+- kind: PageContent
+  properties:
+  - name: PageKey
+  - name: ContentKey
+
+- kind: Tag
+  properties:
+  - name: Created
+    direction: desc
+  - name: Name
+
 - kind: User
   properties:
   - name: Email
   - name: TagIDs
+
+- kind: UserTag
+  properties:
+  - name: UserKey
+  - name: TagKey

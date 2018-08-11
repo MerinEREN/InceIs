@@ -10,19 +10,21 @@ package inceis
 
 import (
 	"github.com/MerinEREN/iiPackages/api/account"
-	"github.com/MerinEREN/iiPackages/api/accountSettings"
 	"github.com/MerinEREN/iiPackages/api/contents"
 	"github.com/MerinEREN/iiPackages/api/demand"
-	"github.com/MerinEREN/iiPackages/api/index"
 	"github.com/MerinEREN/iiPackages/api/languages"
 	"github.com/MerinEREN/iiPackages/api/offer"
 	"github.com/MerinEREN/iiPackages/api/page"
 	"github.com/MerinEREN/iiPackages/api/pages"
 	"github.com/MerinEREN/iiPackages/api/roles"
 	"github.com/MerinEREN/iiPackages/api/servicePack"
+	"github.com/MerinEREN/iiPackages/api/settingsAccount"
+	"github.com/MerinEREN/iiPackages/api/signin"
 	"github.com/MerinEREN/iiPackages/api/signout"
+	"github.com/MerinEREN/iiPackages/api/tags"
 	"github.com/MerinEREN/iiPackages/api/timeline"
-	"github.com/MerinEREN/iiPackages/api/userSettings"
+	"github.com/MerinEREN/iiPackages/api/user"
+	"github.com/MerinEREN/iiPackages/api/users"
 	"github.com/MerinEREN/iiPackages/session"
 	"strings"
 	// "github.com/MerinEREN/iiPackages/cookie"
@@ -44,27 +46,30 @@ var (
 func init() {
 	// http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.Handle("/",
-		http.TimeoutHandler(http.HandlerFunc(makeHandlerFunc(index.Handler)),
+		http.TimeoutHandler(http.HandlerFunc(makeHandlerFunc(signin.Handler)),
 			1000*time.Millisecond,
 			"This is http.TimeoutHandler(handler, time.Duration, message) "+
 				"message bitch =)"))
-	// http.HandleFunc("/", makeHandlerFunc(index.Handler))
-	http.HandleFunc("/timeline", makeHandlerFunc(timeline.Handler))
-	http.HandleFunc("/languages", makeHandlerFunc(languages.Handler))
-	http.HandleFunc("/pages", makeHandlerFunc(pages.Handler))
-	http.HandleFunc("/pages/", makeHandlerFunc(page.Handler))
+	// http.HandleFunc("/", makeHandlerFunc(s, signin.Handler))
 	http.HandleFunc("/contents", makeHandlerFunc(contents.Handler))
+	http.HandleFunc("/users/", makeHandlerFunc(user.Handler))
+	http.HandleFunc("/languages", makeHandlerFunc(languages.Handler))
+	http.HandleFunc("/signout", makeHandlerFunc(signout.Handler))
+	http.HandleFunc("/accounts/", makeHandlerFunc(account.Handler))
 	http.HandleFunc("/demands", makeHandlerFunc(demand.Handler))
 	http.HandleFunc("/offers", makeHandlerFunc(offer.Handler))
 	http.HandleFunc("/servicePacks", makeHandlerFunc(servicePack.Handler))
+	http.HandleFunc("/timeline", makeHandlerFunc(timeline.Handler))
+	http.HandleFunc("/pages", makeHandlerFunc(pages.Handler))
+	http.HandleFunc("/pages/", makeHandlerFunc(page.Handler))
+	http.HandleFunc("/tags", makeHandlerFunc(tags.Handler))
+	http.HandleFunc("/settingsAccount", makeHandlerFunc(settingsAccount.Handler))
+	http.HandleFunc("/users", makeHandlerFunc(users.Handler))
 	http.HandleFunc("/roles/", makeHandlerFunc(roles.Handler))
-	http.HandleFunc("/userSettings/", makeHandlerFunc(userSettings.Handler))
-	http.HandleFunc("/accountSettings/", makeHandlerFunc(accountSettings.Handler))
+	// http.HandleFunc("/accounts", makeHandlerFunc(accounts.Handler))
 	// http.HandleFunc("/signUp", makeHandlerFunc(signUpHandler))
 	// http.HandleFunc("/logIn", makeHandlerFunc(logInHandler))
 	// http.HandleFunc("/accounts", makeHandlerFunc(accountsHandler))
-	http.HandleFunc("/accounts/", makeHandlerFunc(account.Handler))
-	http.HandleFunc("/signout", makeHandlerFunc(signout.Handler))
 	/* if http.PostForm("/logIn", data); err != nil {
 		http.Err(w, "Internal server error while login",
 			http.StatusBadRequest)
@@ -122,14 +127,9 @@ func init() {
 
 type handlerFuncWithContextAndUser func(s *session.Session)
 
+// CHANGE THE SESSION THING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 func makeHandlerFunc(fn handlerFuncWithContextAndUser) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		s := new(session.Session)
-		s.Init(w, r)
-		// Authenticate the client
-		if s.U == nil && r.URL.Path != "/" {
-			http.Redirect(w, r, "/", http.StatusSeeOther)
-		}
 		/* m := validPath.FindStringSubmatch(r.URL.Path)
 		if m == nil {
 			log.Printf("Invalid Path: %s\n", r.URL.Path)
@@ -140,7 +140,17 @@ func makeHandlerFunc(fn handlerFuncWithContextAndUser) http.HandlerFunc {
 			fmt.Println(val)
 		}*/
 		// CHANGE CONTENT AND TEMPLATE THINGS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		s := new(session.Session)
+		s.Init(w, r)
 		if strings.Contains(r.Header.Get("Accept"), "text/html") {
+			// Authenticate the client
+			// Check should be in here to be able to make content data requests
+			// and redirect content page request.
+			if s.U == nil && r.URL.Path != "/" {
+				log.Println("REDIRECTTT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+				http.Redirect(w, r, "/", http.StatusSeeOther)
+				return
+			}
 			log.Println("Getting template !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 			template.RenderIndex(w)
 		} else if strings.Contains(r.Header.Get("Accept"), "text/plain") {
