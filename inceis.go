@@ -24,6 +24,7 @@ import (
 	"github.com/MerinEREN/iiPackages/api/tags"
 	"github.com/MerinEREN/iiPackages/api/timeline"
 	"github.com/MerinEREN/iiPackages/api/user"
+	"github.com/MerinEREN/iiPackages/api/userTags"
 	"github.com/MerinEREN/iiPackages/api/users"
 	"github.com/MerinEREN/iiPackages/session"
 	"strings"
@@ -50,7 +51,7 @@ func init() {
 			1000*time.Millisecond,
 			"This is http.TimeoutHandler(handler, time.Duration, message) "+
 				"message bitch =)"))
-	// http.HandleFunc("/", makeHandlerFunc(s, signin.Handler))
+	// http.HandleFunc("/", makeHandlerFunc(signin.Handler))
 	http.HandleFunc("/contents", makeHandlerFunc(contents.Handler))
 	http.HandleFunc("/users/", makeHandlerFunc(user.Handler))
 	http.HandleFunc("/languages", makeHandlerFunc(languages.Handler))
@@ -65,6 +66,7 @@ func init() {
 	http.HandleFunc("/tags", makeHandlerFunc(tags.Handler))
 	http.HandleFunc("/settingsAccount", makeHandlerFunc(settingsAccount.Handler))
 	http.HandleFunc("/users", makeHandlerFunc(users.Handler))
+	http.HandleFunc("/userTags/", makeHandlerFunc(userTags.Handler))
 	http.HandleFunc("/roles/", makeHandlerFunc(roles.Handler))
 	// http.HandleFunc("/accounts", makeHandlerFunc(accounts.Handler))
 	// http.HandleFunc("/signUp", makeHandlerFunc(signUpHandler))
@@ -125,10 +127,10 @@ func init() {
 	template.RenderLogIn(w, p)
 } */
 
-type handlerFuncWithContextAndUser func(s *session.Session)
+type handlerFuncWithSessionParam func(s *session.Session)
 
 // CHANGE THE SESSION THING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-func makeHandlerFunc(fn handlerFuncWithContextAndUser) http.HandlerFunc {
+func makeHandlerFunc(fn handlerFuncWithSessionParam) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		/* m := validPath.FindStringSubmatch(r.URL.Path)
 		if m == nil {
@@ -155,7 +157,11 @@ func makeHandlerFunc(fn handlerFuncWithContextAndUser) http.HandlerFunc {
 			template.RenderIndex(w)
 		} else if strings.Contains(r.Header.Get("Accept"), "text/plain") {
 			log.Println("Getting data !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-			fn(s)
+			// SECURITY CHECK
+			// add other landing page request calls later.
+			if s.U != nil || (r.URL.Path == "/contents" || r.URL.Path == "/") {
+				fn(s)
+			}
 		}
 	}
 }
