@@ -159,3 +159,8 @@ indexes:
   properties:
   - name: UserKey
   - name: TagKey
+
+- kind: UserTag
+  ancestor: yes
+  properties:
+  - name: TagKey
