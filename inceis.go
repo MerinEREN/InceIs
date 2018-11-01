@@ -155,7 +155,8 @@ func makeHandlerFunc(fn handlerFuncWithSessionParam) http.HandlerFunc {
 			}
 			log.Println("Getting template !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 			template.RenderIndex(w)
-		} else if strings.Contains(r.Header.Get("Accept"), "text/plain") {
+			// } else if strings.Contains(r.Header.Get("Accept"), "application/json") {
+		} else {
 			log.Println("Getting data !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 			// SECURITY CHECK
 			// add other landing page request calls later.
