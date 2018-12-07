@@ -11,19 +11,24 @@ package inceis
 import (
 	"github.com/MerinEREN/iiPackages/api/account"
 	"github.com/MerinEREN/iiPackages/api/contents"
-	"github.com/MerinEREN/iiPackages/api/demand"
+	"github.com/MerinEREN/iiPackages/api/demands"
 	"github.com/MerinEREN/iiPackages/api/languages"
-	"github.com/MerinEREN/iiPackages/api/offer"
+	"github.com/MerinEREN/iiPackages/api/offers"
 	"github.com/MerinEREN/iiPackages/api/page"
 	"github.com/MerinEREN/iiPackages/api/pages"
+	"github.com/MerinEREN/iiPackages/api/role"
+	"github.com/MerinEREN/iiPackages/api/roleType"
+	"github.com/MerinEREN/iiPackages/api/roleTypes"
 	"github.com/MerinEREN/iiPackages/api/roles"
-	"github.com/MerinEREN/iiPackages/api/servicePack"
+	"github.com/MerinEREN/iiPackages/api/servicePacks"
 	"github.com/MerinEREN/iiPackages/api/settingsAccount"
 	"github.com/MerinEREN/iiPackages/api/signin"
 	"github.com/MerinEREN/iiPackages/api/signout"
+	"github.com/MerinEREN/iiPackages/api/tag"
 	"github.com/MerinEREN/iiPackages/api/tags"
 	"github.com/MerinEREN/iiPackages/api/timeline"
 	"github.com/MerinEREN/iiPackages/api/user"
+	"github.com/MerinEREN/iiPackages/api/userRoles"
 	"github.com/MerinEREN/iiPackages/api/userTags"
 	"github.com/MerinEREN/iiPackages/api/users"
 	"github.com/MerinEREN/iiPackages/session"
@@ -54,20 +59,25 @@ func init() {
 	// http.HandleFunc("/", makeHandlerFunc(signin.Handler))
 	http.HandleFunc("/contents", makeHandlerFunc(contents.Handler))
 	http.HandleFunc("/users/", makeHandlerFunc(user.Handler))
+	http.HandleFunc("/userTags/", makeHandlerFunc(userTags.Handler))
+	http.HandleFunc("/userRoles/", makeHandlerFunc(userRoles.Handler))
 	http.HandleFunc("/languages", makeHandlerFunc(languages.Handler))
 	http.HandleFunc("/signout", makeHandlerFunc(signout.Handler))
 	http.HandleFunc("/accounts/", makeHandlerFunc(account.Handler))
-	http.HandleFunc("/demands", makeHandlerFunc(demand.Handler))
-	http.HandleFunc("/offers", makeHandlerFunc(offer.Handler))
-	http.HandleFunc("/servicePacks", makeHandlerFunc(servicePack.Handler))
+	http.HandleFunc("/demands", makeHandlerFunc(demands.Handler))
+	http.HandleFunc("/offers", makeHandlerFunc(offers.Handler))
+	http.HandleFunc("/servicePacks", makeHandlerFunc(servicePacks.Handler))
 	http.HandleFunc("/timeline", makeHandlerFunc(timeline.Handler))
 	http.HandleFunc("/pages", makeHandlerFunc(pages.Handler))
 	http.HandleFunc("/pages/", makeHandlerFunc(page.Handler))
 	http.HandleFunc("/tags", makeHandlerFunc(tags.Handler))
+	http.HandleFunc("/tags/", makeHandlerFunc(tag.Handler))
+	http.HandleFunc("/roles", makeHandlerFunc(roles.Handler))
+	http.HandleFunc("/roles/", makeHandlerFunc(role.Handler))
+	http.HandleFunc("/roleTypes", makeHandlerFunc(roleTypes.Handler))
+	http.HandleFunc("/roleTypes/", makeHandlerFunc(roleType.Handler))
 	http.HandleFunc("/settingsAccount", makeHandlerFunc(settingsAccount.Handler))
 	http.HandleFunc("/users", makeHandlerFunc(users.Handler))
-	http.HandleFunc("/userTags/", makeHandlerFunc(userTags.Handler))
-	http.HandleFunc("/roles/", makeHandlerFunc(roles.Handler))
 	// http.HandleFunc("/accounts", makeHandlerFunc(accounts.Handler))
 	// http.HandleFunc("/signUp", makeHandlerFunc(signUpHandler))
 	// http.HandleFunc("/logIn", makeHandlerFunc(logInHandler))
