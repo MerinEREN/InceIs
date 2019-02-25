@@ -10,6 +10,25 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: Demand
+  properties:
+  - name: LastModified
+    direction: desc
+  - name: TagIDs
+
+- kind: Demand
+  properties:
+  - name: Status
+  - name: TagIDs
+  - name: LastModified
+    direction: desc
+
+- kind: Demand
+  properties:
+  - name: TagIDs
+  - name: LastModified
+    direction: desc
+
 - kind: Language
   properties:
   - name: Created
@@ -17,12 +36,44 @@ indexes:
   - name: ContentID
   - name: Link
 
+- kind: Offer
+  properties:
+  - name: TagIDs
+  - name: LastModified
+    direction: desc
+
+- kind: Offer
+  ancestor: yes
+  properties:
+  - name: Status
+  - name: LastModified
+    direction: desc
+
 - kind: Page
   properties:
   - name: Created
     direction: desc
   - name: Link
   - name: Text
+
+- kind: ServicePack
+  properties:
+  - name: Status
+  - name: TagIDs
+  - name: LastModified
+    direction: desc
+
+- kind: ServicePack
+  properties:
+  - name: TagIDs
+  - name: LastModified
+    direction: desc
+
+- kind: User
+  ancestor: yes
+  properties:
+  - name: Created
+    direction: desc
 
 - kind: User
   ancestor: yes
@@ -33,3 +84,14 @@ indexes:
   - name: Link
   - name: Name.First
   - name: Name.Last
+
+- kind: User
+  ancestor: yes
+  properties:
+  - name: Created
+    direction: desc
+  - name: Email
+  - name: Link
+  - name: Name.First
+  - name: Name.Last
+  - name: Status

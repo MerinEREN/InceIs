@@ -11,6 +11,7 @@ package inceis
 import (
 	"github.com/MerinEREN/iiPackages/api/account"
 	"github.com/MerinEREN/iiPackages/api/contents"
+	"github.com/MerinEREN/iiPackages/api/demand"
 	"github.com/MerinEREN/iiPackages/api/demands"
 	"github.com/MerinEREN/iiPackages/api/languages"
 	"github.com/MerinEREN/iiPackages/api/offers"
@@ -65,6 +66,7 @@ func init() {
 	http.HandleFunc("/signout", makeHandlerFunc(signout.Handler))
 	http.HandleFunc("/accounts/", makeHandlerFunc(account.Handler))
 	http.HandleFunc("/demands", makeHandlerFunc(demands.Handler))
+	http.HandleFunc("/demands/", makeHandlerFunc(demand.Handler))
 	http.HandleFunc("/offers", makeHandlerFunc(offers.Handler))
 	http.HandleFunc("/servicePacks", makeHandlerFunc(servicePacks.Handler))
 	http.HandleFunc("/timeline", makeHandlerFunc(timeline.Handler))
