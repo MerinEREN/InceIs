@@ -14,6 +14,7 @@ import (
 	"github.com/MerinEREN/iiPackages/api/demand"
 	"github.com/MerinEREN/iiPackages/api/demands"
 	"github.com/MerinEREN/iiPackages/api/languages"
+	"github.com/MerinEREN/iiPackages/api/offer"
 	"github.com/MerinEREN/iiPackages/api/offers"
 	"github.com/MerinEREN/iiPackages/api/page"
 	"github.com/MerinEREN/iiPackages/api/pages"
@@ -68,6 +69,7 @@ func init() {
 	http.HandleFunc("/demands", makeHandlerFunc(demands.Handler))
 	http.HandleFunc("/demands/", makeHandlerFunc(demand.Handler))
 	http.HandleFunc("/offers", makeHandlerFunc(offers.Handler))
+	http.HandleFunc("/offers/", makeHandlerFunc(offer.Handler))
 	http.HandleFunc("/servicePacks", makeHandlerFunc(servicePacks.Handler))
 	http.HandleFunc("/timeline", makeHandlerFunc(timeline.Handler))
 	http.HandleFunc("/pages", makeHandlerFunc(pages.Handler))
