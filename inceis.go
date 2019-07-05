@@ -10,7 +10,7 @@ package inceis
 
 import (
 	"github.com/MerinEREN/iiPackages/api/account"
-	"github.com/MerinEREN/iiPackages/api/contents"
+	"github.com/MerinEREN/iiPackages/api/contexts"
 	"github.com/MerinEREN/iiPackages/api/demand"
 	"github.com/MerinEREN/iiPackages/api/demands"
 	"github.com/MerinEREN/iiPackages/api/languages"
@@ -18,20 +18,21 @@ import (
 	"github.com/MerinEREN/iiPackages/api/offers"
 	"github.com/MerinEREN/iiPackages/api/page"
 	"github.com/MerinEREN/iiPackages/api/pages"
+	"github.com/MerinEREN/iiPackages/api/photos"
 	"github.com/MerinEREN/iiPackages/api/role"
 	"github.com/MerinEREN/iiPackages/api/roleType"
 	"github.com/MerinEREN/iiPackages/api/roleTypes"
 	"github.com/MerinEREN/iiPackages/api/roles"
+	"github.com/MerinEREN/iiPackages/api/rolesUser"
 	"github.com/MerinEREN/iiPackages/api/servicePacks"
 	"github.com/MerinEREN/iiPackages/api/settingsAccount"
 	"github.com/MerinEREN/iiPackages/api/signin"
 	"github.com/MerinEREN/iiPackages/api/signout"
 	"github.com/MerinEREN/iiPackages/api/tag"
 	"github.com/MerinEREN/iiPackages/api/tags"
+	"github.com/MerinEREN/iiPackages/api/tagsUser"
 	"github.com/MerinEREN/iiPackages/api/timeline"
 	"github.com/MerinEREN/iiPackages/api/user"
-	"github.com/MerinEREN/iiPackages/api/userRoles"
-	"github.com/MerinEREN/iiPackages/api/userTags"
 	"github.com/MerinEREN/iiPackages/api/users"
 	"github.com/MerinEREN/iiPackages/session"
 	"strings"
@@ -59,12 +60,13 @@ func init() {
 			"This is http.TimeoutHandler(handler, time.Duration, message) "+
 				"message bitch =)"))
 	// http.HandleFunc("/", makeHandlerFunc(signin.Handler))
-	http.HandleFunc("/contents", makeHandlerFunc(contents.Handler))
+	http.HandleFunc("/contexts", makeHandlerFunc(contexts.Handler))
 	http.HandleFunc("/users/", makeHandlerFunc(user.Handler))
-	http.HandleFunc("/userTags/", makeHandlerFunc(userTags.Handler))
-	http.HandleFunc("/userRoles/", makeHandlerFunc(userRoles.Handler))
-	http.HandleFunc("/languages", makeHandlerFunc(languages.Handler))
+	http.HandleFunc("/photos", makeHandlerFunc(photos.Handler))
+	http.HandleFunc("/rolesUser/", makeHandlerFunc(rolesUser.Handler))
+	http.HandleFunc("/tagsUser/", makeHandlerFunc(tagsUser.Handler))
 	http.HandleFunc("/signout", makeHandlerFunc(signout.Handler))
+	http.HandleFunc("/languages", makeHandlerFunc(languages.Handler))
 	http.HandleFunc("/accounts/", makeHandlerFunc(account.Handler))
 	http.HandleFunc("/demands", makeHandlerFunc(demands.Handler))
 	http.HandleFunc("/demands/", makeHandlerFunc(demand.Handler))
@@ -106,7 +108,7 @@ func init() {
 }
 
 /* func logInHandler(w http.ResponseWriter, r *http.Request, s string) {
-	p, err := content.Get(r, s)
+	p, err := context.Get(r, s)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -155,13 +157,13 @@ func makeHandlerFunc(fn handlerFuncWithSessionParam) http.HandlerFunc {
 		/* for _, val := range m {
 			fmt.Println(val)
 		}*/
-		// CHANGE CONTENT AND TEMPLATE THINGS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// CHANGE CONTEXT AND TEMPLATE THINGS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		s := new(session.Session)
 		s.Init(w, r)
 		if strings.Contains(r.Header.Get("Accept"), "text/html") {
 			// Authenticate the client
-			// Check should be in here to be able to make content data requests
-			// and redirect content page request.
+			// Check should be in here to be able to make context data requests
+			// and redirect context page request.
 			if s.U == nil && r.URL.Path != "/" {
 				log.Println("REDIRECTTT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 				http.Redirect(w, r, "/", http.StatusSeeOther)
@@ -174,7 +176,7 @@ func makeHandlerFunc(fn handlerFuncWithSessionParam) http.HandlerFunc {
 			log.Println("Getting data !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 			// SECURITY CHECK
 			// add other landing page request calls later.
-			if s.U != nil || (r.URL.Path == "/contents" || r.URL.Path == "/") {
+			if s.U != nil || (r.URL.Path == "/contexts" || r.URL.Path == "/") {
 				fn(s)
 			}
 		}
