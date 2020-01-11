@@ -30,6 +30,7 @@ import (
 	"github.com/MerinEREN/iiPackages/api/signout"
 	"github.com/MerinEREN/iiPackages/api/tag"
 	"github.com/MerinEREN/iiPackages/api/tags"
+	"github.com/MerinEREN/iiPackages/api/tagsDemand"
 	"github.com/MerinEREN/iiPackages/api/tagsUser"
 	"github.com/MerinEREN/iiPackages/api/timeline"
 	"github.com/MerinEREN/iiPackages/api/user"
@@ -70,6 +71,7 @@ func init() {
 	http.HandleFunc("/accounts/", makeHandlerFunc(account.Handler))
 	http.HandleFunc("/demands", makeHandlerFunc(demands.Handler))
 	http.HandleFunc("/demands/", makeHandlerFunc(demand.Handler))
+	http.HandleFunc("/tagsDemand/", makeHandlerFunc(tagsDemand.Handler))
 	http.HandleFunc("/offers", makeHandlerFunc(offers.Handler))
 	http.HandleFunc("/offers/", makeHandlerFunc(offer.Handler))
 	http.HandleFunc("/servicePacks", makeHandlerFunc(servicePacks.Handler))
